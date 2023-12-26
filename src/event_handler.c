@@ -16,11 +16,11 @@ void handle_events_function(SDL_Event *event, SDL_Rect *r, int *quit,
         break;
       case SDLK_DOWN:
         r->y += 10;
-        cube->z -= 3;
+        cube->pos[2] -= 3;
         break;
       case SDLK_UP:
         r->y -= 10;
-        cube->z += 3;
+        cube->pos[2] += 3;
         break;
       case SDLK_RIGHT:
         r->x += 10;
@@ -30,19 +30,22 @@ void handle_events_function(SDL_Event *event, SDL_Rect *r, int *quit,
         break;
       case SDLK_s:
         r->y += 10;
-        cube->y += 3;
+        cube->pos[1] += 3;
         break;
       case SDLK_w:
         r->y -= 10;
-        cube->y -= 3;
+        cube->pos[1] -= 3;
         break;
       case SDLK_d:
         r->x += 10;
-        cube->x += 3;
+        cube->pos[0] += 3;
         break;
       case SDLK_a:
         r->x -= 10;
-        cube->x -= 3;
+        cube->pos[0] -= 3;
+        break;
+      case SDLK_r:
+        cube->angle_deg[0] += 3;
         break;
       }
     }

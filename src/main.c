@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 
   SDL_Rect r = {.x = WIDTH / 2 - 25, .y = HEIGHT / 2 - 25, .w = 50, .h = 50};
 
-  Cube cube = {.x = 0, .y = 5, .z = 50, .side_length = 20};
+  Cube cube = {.pos = {0, 5, 50}, .side_length = 20, .angle_deg = 0};
   init_cube(&cube);
 
   Focal focal = {.x = 0, .y = 0, .z = 0};
@@ -45,6 +45,13 @@ int main(int argc, char **argv) {
 
     // Update the corners of the cube dependent on the mid point.
     update_corners(&cube);
+
+    cube.angle_deg[0] += 1;
+    cube.angle_deg[1] += 1;
+    cube.angle_deg[2] += 1;
+    rotate_x(&cube);
+    rotate_y(&cube);
+    rotate_z(&cube);
 
     // Project cube to the screen plane.
     project_cube(&cube, &focal, &screen);
