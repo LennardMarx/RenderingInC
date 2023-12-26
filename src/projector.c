@@ -1,7 +1,6 @@
 #include "../include/projector.h"
 
 void project_cube(Cube *cube, Focal *focal, Screen *screen) {
-
   for (int i = 0; i < 8; i++) {
 
     float dir[3] = {cube->corners[i][0] - focal->x,
