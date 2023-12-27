@@ -51,7 +51,7 @@ void init_interface(Interface *interface, int width, int height) {
   interface->draw_rect_outline = draw_rect_outline_function;
   interface->draw_cube = draw_cube_function;
 
-  interface->window = interface->create_window("C game", width, height);
+  interface->window = interface->create_window("C Renderer", width, height);
   interface->renderer = interface->create_renderer(interface->window);
 }
 

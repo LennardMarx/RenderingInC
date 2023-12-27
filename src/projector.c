@@ -3,17 +3,21 @@
 void project_cube(Cube *cube, Focal *focal, Screen *screen) {
   for (int i = 0; i < 8; i++) {
 
+    // Direction of corner to focal point.
     float dir[3] = {cube->corners[i][0] - focal->x,
                     cube->corners[i][1] - focal->y,
                     cube->corners[i][2] - focal->z};
 
+    // Multiplier of where the plane intersects on the line.
     float t = screen->z / cube->corners[i][2];
     // printf("Intersection z: %f\n", t);
 
+    // Intersection based on the Multiplier.
     float intersection[2] = {t * dir[0], t * dir[1]}; //, t * dir[2]};
     // printf("Screen corner:  %f, %f, %f\n", intersection[0],
     // intersection[1], intersection[2]);
 
+    // Conversion from plane to screen size.
     cube->screen_pos[i][0] =
         (intersection[0] + (float)screen->width / 2) * WIDTH / screen->width;
     cube->screen_pos[i][1] =

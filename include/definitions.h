@@ -2,7 +2,7 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-#define WIDTH 800
-#define HEIGHT 600
+#define WIDTH 1200
+#define HEIGHT 900
 
 #endif

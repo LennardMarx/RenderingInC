@@ -1,9 +1,9 @@
 #include "../include/screen_plane.h"
 
 void init_screen(Screen *screen) {
-  screen->corners = malloc(4 * sizeof(int *));
-  for (int i = 0; i < 8; i++)
-    screen->corners[i] = malloc(3 * sizeof(int));
+  // screen->corners = malloc(4 * sizeof(int *));
+  // for (int i = 0; i < 8; i++)
+  //   screen->corners[i] = malloc(3 * sizeof(int));
 
   screen->corners[0][0] = screen->x - (float)screen->width / 2;
   screen->corners[0][1] = screen->y - (float)screen->heigth / 2;
