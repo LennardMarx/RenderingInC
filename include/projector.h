@@ -3,9 +3,11 @@
 
 #include "../include/cube.h"
 #include "../include/definitions.h"
-#include "../include/focal_point.h"
-#include "../include/screen_plane.h"
+#include "../include/player.h"
+#include <stdio.h>
+// #include "../include/projection_plane.h"
+// #include "../include/focal_point.h"
 
-void project_cube(Cube *cube, Focal *focal, Screen *screen);
+void project_cube(Cube *cube, Player *player);
 
 #endif

@@ -4,13 +4,14 @@
 #include <stdlib.h>
 
 typedef struct {
-  float x, y, z;
+  // float x, y, z;
+  float pos[3];
   int width;
-  int heigth;
+  int height;
   // float **corners;
   float corners[4][3];
-} Screen;
+} Projection_Plane;
 
-void init_screen(Screen *screen);
+void init_screen(Projection_Plane *plane);
 
 #endif

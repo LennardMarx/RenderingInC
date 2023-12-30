@@ -2,7 +2,8 @@
 #define FOCAL_POINT_H
 
 typedef struct {
-  float x, y, z;
+  // float x, y, z;
+  float pos[3];
 } Focal;
 
 #endif

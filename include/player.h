@@ -1,0 +1,19 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include "../include/projection_plane.h"
+
+struct Player;
+
+typedef struct Player {
+  float pos[3];
+  float rot[3];
+  Projection_Plane *plane;
+  void (*clean_up)(struct Player *player);
+} Player;
+
+void player_init(Player *player);
+
+void player_clean_up(Player *player);
+
+#endif
