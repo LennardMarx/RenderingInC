@@ -1,47 +1,75 @@
 #include "../include/event_handler.h"
 
 void handle_events_function(SDL_Event *event, SDL_Rect *r, int *quit,
-                            Cube *cube, World *world) {
+                            Cube *cube, World *world, Player *player) {
   while (SDL_PollEvent(event) != 0) {
     // User requests quit
     if (event->type == SDL_QUIT) {
       *quit = 1;
     }
   }
+  float speed = 1;
   // Set texture based on current keystate
   const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
   if (currentKeyStates[SDL_SCANCODE_W]) {
-    world->pos[2] -= cosf(world->rot[1] * M_PI / 180) * 3;
-    world->pos[0] += sinf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[2] -= cosf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[0] += sinf(world->rot[1] * M_PI / 180) * 3;
+    player->pos[2] += cosf(player->rot[1] * M_PI / 180) * speed;
+    player->pos[0] -= sinf(player->rot[1] * M_PI / 180) * speed;
   }
   if (currentKeyStates[SDL_SCANCODE_S]) {
-    world->pos[2] += cosf(world->rot[1] * M_PI / 180) * 3;
-    world->pos[0] -= sinf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[2] += cosf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[0] -= sinf(world->rot[1] * M_PI / 180) * 3;
+    player->pos[2] -= cosf(player->rot[1] * M_PI / 180) * speed;
+    player->pos[0] += sinf(player->rot[1] * M_PI / 180) * speed;
   }
   if (currentKeyStates[SDL_SCANCODE_A]) {
-    world->pos[2] += sinf(world->rot[1] * M_PI / 180) * 3;
-    world->pos[0] += cosf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[2] += sinf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[0] += cosf(world->rot[1] * M_PI / 180) * 3;
+    player->pos[2] -= sinf(player->rot[1] * M_PI / 180) * speed;
+    player->pos[0] -= cosf(player->rot[1] * M_PI / 180) * speed;
   }
   if (currentKeyStates[SDL_SCANCODE_D]) {
-    world->pos[2] -= sinf(world->rot[1] * M_PI / 180) * 3;
-    world->pos[0] -= cosf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[2] -= sinf(world->rot[1] * M_PI / 180) * 3;
+    // world->pos[0] -= cosf(world->rot[1] * M_PI / 180) * 3;
+    player->pos[2] += sinf(player->rot[1] * M_PI / 180) * speed;
+    player->pos[0] += cosf(player->rot[1] * M_PI / 180) * speed;
   }
   if (currentKeyStates[SDL_SCANCODE_ESCAPE]) {
     *quit = 1;
   }
   if (currentKeyStates[SDL_SCANCODE_Q]) {
-    world->rot[1] += 2;
+    // world->rot[1] += 2;
+    player->rot[1] += 0.8;
   }
   if (currentKeyStates[SDL_SCANCODE_E]) {
-    world->rot[1] -= 2;
+    // world->rot[1] -= 2;
+    player->rot[1] -= 0.8;
   }
   if (currentKeyStates[SDL_SCANCODE_SPACE]) {
     // world->jump_it = 0;
-    world->pos[1] += 1;
+    // world->pos[1] += 1;
+    player->pos[1] -= 1;
   }
   if (currentKeyStates[SDL_SCANCODE_LSHIFT]) {
-    world->pos[1] -= 1;
+    // world->pos[1] -= 1;
+    player->pos[1] += 1;
     // } else {
+  }
+  if (currentKeyStates[SDL_SCANCODE_UP]) {
+    // world->jump_it = 0;
+    // world->pos[1] += 1;
+    player->rot[0] -= 1;
+  }
+  if (currentKeyStates[SDL_SCANCODE_DOWN]) {
+    // world->pos[1] -= 1;
+    player->rot[0] += 1;
+  }
+  if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+    player->rot[2] -= 1;
+  }
+  if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+    player->rot[2] += 1;
   }
 
   // while (SDL_PollEvent(event) != 0) {

@@ -13,11 +13,11 @@ void init_cube(Cube *cube) {
   cube->rotate_z = rotate_z;
 }
 
-void update_cube(Cube *cube, World *world) {
-  cube->update_pos(cube, world);
+void update_cube(Cube *cube) {
+  // cube->update_pos(cube, world);
   cube->update_corners(cube);
   cube->rotate_x(cube);
-  cube->rotate_y(cube, world);
+  cube->rotate_y(cube);
   cube->rotate_z(cube);
 }
 
@@ -94,27 +94,51 @@ void rotate_x(Cube *cube) {
   }
 }
 
-void rotate_y(Cube *cube, World *world) {
+// void rotate_y(Cube *cube, World *world) {
+//   float ang = cube->angle_deg[1] * M_PI / 180; // to radians
+//   float new_pos[3];
+//   for (int i = 0; i < 8; i++) {
+//     // Project cube to origin.
+//     cube->corners[i][0] = cube->corners[i][0] - world->pos_ref[0];
+//     cube->corners[i][1] = cube->corners[i][1] - world->pos_ref[1];
+//     cube->corners[i][2] = cube->corners[i][2] - world->pos_ref[2];
+//     // Matrix multiplication.
+//     new_pos[0] =
+//         cube->corners[i][0] * cosf(ang) + cube->corners[i][2] * sinf(ang);
+//     new_pos[1] = cube->corners[i][1];
+//     new_pos[2] =
+//         -cube->corners[i][0] * sinf(ang) + cube->corners[i][2] * cosf(ang);
+//     cube->corners[i][0] = new_pos[0];
+//     cube->corners[i][1] = new_pos[1];
+//     cube->corners[i][2] = new_pos[2];
+//     // Set back to original position.
+//     cube->corners[i][0] = cube->corners[i][0] + world->pos_ref[0];
+//     cube->corners[i][1] = cube->corners[i][1] + world->pos_ref[1];
+//     cube->corners[i][2] = cube->corners[i][2] + world->pos_ref[2];
+//   }
+// }
+void rotate_y(Cube *cube) {
   float ang = cube->angle_deg[1] * M_PI / 180; // to radians
   float new_pos[3];
   for (int i = 0; i < 8; i++) {
     // Project cube to origin.
-    cube->corners[i][0] = cube->corners[i][0] - world->pos_ref[0];
-    cube->corners[i][1] = cube->corners[i][1] - world->pos_ref[1];
-    cube->corners[i][2] = cube->corners[i][2] - world->pos_ref[2];
+    cube->corners[i][0] = cube->corners[i][0] - cube->pos[0];
+    cube->corners[i][1] = cube->corners[i][1] - cube->pos[1];
+    cube->corners[i][2] = cube->corners[i][2] - cube->pos[2];
     // Matrix multiplication.
     new_pos[0] =
         cube->corners[i][0] * cosf(ang) + cube->corners[i][2] * sinf(ang);
     new_pos[1] = cube->corners[i][1];
     new_pos[2] =
         -cube->corners[i][0] * sinf(ang) + cube->corners[i][2] * cosf(ang);
+    new_pos[2] = cube->corners[i][2];
     cube->corners[i][0] = new_pos[0];
     cube->corners[i][1] = new_pos[1];
     cube->corners[i][2] = new_pos[2];
     // Set back to original position.
-    cube->corners[i][0] = cube->corners[i][0] + world->pos_ref[0];
-    cube->corners[i][1] = cube->corners[i][1] + world->pos_ref[1];
-    cube->corners[i][2] = cube->corners[i][2] + world->pos_ref[2];
+    cube->corners[i][0] = cube->corners[i][0] + cube->pos[0];
+    cube->corners[i][1] = cube->corners[i][1] + cube->pos[1];
+    cube->corners[i][2] = cube->corners[i][2] + cube->pos[2];
   }
 }
 void rotate_z(Cube *cube) {

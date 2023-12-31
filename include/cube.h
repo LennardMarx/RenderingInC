@@ -16,23 +16,23 @@ typedef struct Cube {
   // float **corners;
   float corners[8][3];
   int screen_pos[8][2];
-  void (*update)(struct Cube *cube, World *world);
+  void (*update)(struct Cube *cube);
   void (*update_corners)(struct Cube *cube);
   void (*update_pos)(struct Cube *cube, World *world);
   void (*rotate_x)(struct Cube *cube);
-  void (*rotate_y)(struct Cube *cube, World *world);
+  void (*rotate_y)(struct Cube *cube);
   void (*rotate_z)(struct Cube *cube);
 } Cube;
 
 void init_cube(Cube *cube);
 
-void update_cube(Cube *cube, World *world);
+void update_cube(Cube *cube);
 
 void update_pos(Cube *cube, World *world);
 void update_corners(Cube *cube);
 
 void rotate_x(Cube *cube);
-void rotate_y(Cube *cube, World *world);
+void rotate_y(Cube *cube);
 void rotate_z(Cube *cube);
 
 #endif
