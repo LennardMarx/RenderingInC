@@ -26,7 +26,8 @@ Matrix3x3 get_rotation_matrix(float thetaX, float thetaY, float thetaZ) {
                    {sin(thetaZ), cos(thetaZ), 0},
                    {0, 0, 1}}};
 
-  Matrix3x3 result = multiply_matrices(Rx, Ry);
+  Matrix3x3 result = multiply_matrices(Ry, Rx);
   result = multiply_matrices(result, Rz);
+  // result = Ry;
   return result;
 }

@@ -55,6 +55,8 @@ void init_interface(Interface *interface, int width, int height) {
   interface->renderer = interface->create_renderer(interface->window);
 }
 
+void destroy_interface(Interface *interface) { free(interface); }
+
 void draw_cube_function(SDL_Renderer *renderer,
                         Cube *cube) { // int screen_pos[8][2]) {
 

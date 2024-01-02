@@ -5,6 +5,17 @@ void init_screen(Projection_Plane *screen) {
   // for (int i = 0; i < 8; i++)
   //   screen->corners[i] = malloc(3 * sizeof(int));
 
+  projection_plane_update_corners(screen);
+  screen->rotate = projection_plane_rotate;
+  screen->rotate_x = projection_plane_rotate_x;
+  screen->rotate_y = projection_plane_rotate_y;
+  screen->rotate_z = projection_plane_rotate_z;
+  screen->calculate_centroid = projection_plane_calculate_centroid;
+  screen->calc_normal = projection_plane_calc_normal;
+}
+
+void projection_plane_update_corners(Projection_Plane *screen) {
+
   screen->corners[0][0] = screen->pos[0] - (float)screen->width / 2;
   screen->corners[0][1] = screen->pos[1] - (float)screen->height / 2;
   screen->corners[0][2] = screen->pos[2];
@@ -20,13 +31,6 @@ void init_screen(Projection_Plane *screen) {
   screen->corners[3][0] = screen->pos[0] - (float)screen->width / 2;
   screen->corners[3][1] = screen->pos[1] + (float)screen->height / 2;
   screen->corners[3][2] = screen->pos[2];
-
-  screen->rotate = projection_plane_rotate;
-  screen->rotate_x = projection_plane_rotate_x;
-  screen->rotate_y = projection_plane_rotate_y;
-  screen->rotate_z = projection_plane_rotate_z;
-  screen->calculate_centroid = projection_plane_calculate_centroid;
-  screen->calc_normal = projection_plane_calc_normal;
 }
 
 // void projection_plane_update_pos(Projection_Plane *plane, float rot[3])
@@ -36,10 +40,14 @@ void init_screen(Projection_Plane *screen) {
 
 // Hacky implementation.
 void projection_plane_calc_normal(Projection_Plane *plane, float point[3]) {
-  plane->normal[0] =
-      (plane->centroid[0] - point[0]) / 65; // 65 -> player plane distance
+  // 65 -> player plane distance
+  plane->normal[0] = (plane->centroid[0] - point[0]) / 65;
   plane->normal[1] = (plane->centroid[1] - point[1]) / 65;
   plane->normal[2] = (plane->centroid[2] - point[2]) / 65;
+
+  // printf("Normal Length: %f\n", sqrt(plane->normal[0] * plane->normal[0] +
+  //                                    plane->normal[1] * plane->normal[1] +
+  //                                    plane->normal[2] * plane->normal[2]));
 }
 
 void projection_plane_calculate_centroid(Projection_Plane *plane) {
@@ -144,9 +152,9 @@ void projection_plane_rotate_y(Projection_Plane *plane, float point[3]) {
     new_pos[2] =
         -plane->corners[i][0] * sinf(ang) + plane->corners[i][2] * cosf(ang);
 
-    plane->corners_ref_2[i][0] = new_pos[0]; // + point[0];
-    plane->corners_ref_2[i][1] = new_pos[1]; // + point[1];
-    plane->corners_ref_2[i][2] = new_pos[2]; // + point[2];
+    plane->corners_ref[i][0] = new_pos[0]; // + point[0];
+    plane->corners_ref[i][1] = new_pos[1]; // + point[1];
+    plane->corners_ref[i][2] = new_pos[2]; // + point[2];
 
     // Set back to original position.
     // plane->corners[i][0] = plane->corners[i][0] + point[0];

@@ -1,37 +1,44 @@
 #include "../include/event_handler.h"
+#include <SDL2/SDL_events.h>
 
-void handle_events_function(SDL_Event *event, SDL_Rect *r, int *quit,
-                            Cube *cube, World *world, Player *player) {
+void handle_events_function(SDL_Event *event, int *quit, Player *player) {
+  SDL_SetRelativeMouseMode(SDL_TRUE);
   while (SDL_PollEvent(event) != 0) {
     // User requests quit
     if (event->type == SDL_QUIT) {
       *quit = 1;
     }
+    if (event->type == SDL_MOUSEMOTION) {
+      player->rot[1] -= (float)event->motion.xrel / 15;
+      player->rot[0] += (float)event->motion.yrel / 15;
+    }
   }
   float speed = 1;
   // Set texture based on current keystate
   const Uint8 *currentKeyStates = SDL_GetKeyboardState(NULL);
+  if (currentKeyStates[SDL_MOUSEMOTION]) {
+
+    // assuming I have a 800x600 Game window, then the result would be:
+    static int xpos = WIDTH / 2;  // = 400 to center the cursor in the window
+    static int ypos = HEIGHT / 2; // = 300 to center the cursor in the window
+    xpos += event->motion.xrel;
+    printf("X Pos: %d", xpos);
+    ypos += event->motion.yrel;
+  }
+
   if (currentKeyStates[SDL_SCANCODE_W]) {
-    // world->pos[2] -= cosf(world->rot[1] * M_PI / 180) * 3;
-    // world->pos[0] += sinf(world->rot[1] * M_PI / 180) * 3;
     player->pos[2] += cosf(player->rot[1] * M_PI / 180) * speed;
     player->pos[0] -= sinf(player->rot[1] * M_PI / 180) * speed;
   }
   if (currentKeyStates[SDL_SCANCODE_S]) {
-    // world->pos[2] += cosf(world->rot[1] * M_PI / 180) * 3;
-    // world->pos[0] -= sinf(world->rot[1] * M_PI / 180) * 3;
     player->pos[2] -= cosf(player->rot[1] * M_PI / 180) * speed;
     player->pos[0] += sinf(player->rot[1] * M_PI / 180) * speed;
   }
   if (currentKeyStates[SDL_SCANCODE_A]) {
-    // world->pos[2] += sinf(world->rot[1] * M_PI / 180) * 3;
-    // world->pos[0] += cosf(world->rot[1] * M_PI / 180) * 3;
     player->pos[2] -= sinf(player->rot[1] * M_PI / 180) * speed;
     player->pos[0] -= cosf(player->rot[1] * M_PI / 180) * speed;
   }
   if (currentKeyStates[SDL_SCANCODE_D]) {
-    // world->pos[2] -= sinf(world->rot[1] * M_PI / 180) * 3;
-    // world->pos[0] -= cosf(world->rot[1] * M_PI / 180) * 3;
     player->pos[2] += sinf(player->rot[1] * M_PI / 180) * speed;
     player->pos[0] += cosf(player->rot[1] * M_PI / 180) * speed;
   }
@@ -39,30 +46,21 @@ void handle_events_function(SDL_Event *event, SDL_Rect *r, int *quit,
     *quit = 1;
   }
   if (currentKeyStates[SDL_SCANCODE_Q]) {
-    // world->rot[1] += 2;
     player->rot[1] += 0.8;
   }
   if (currentKeyStates[SDL_SCANCODE_E]) {
-    // world->rot[1] -= 2;
     player->rot[1] -= 0.8;
   }
   if (currentKeyStates[SDL_SCANCODE_SPACE]) {
-    // world->jump_it = 0;
-    // world->pos[1] += 1;
     player->pos[1] -= 1;
   }
   if (currentKeyStates[SDL_SCANCODE_LSHIFT]) {
-    // world->pos[1] -= 1;
     player->pos[1] += 1;
-    // } else {
   }
   if (currentKeyStates[SDL_SCANCODE_UP]) {
-    // world->jump_it = 0;
-    // world->pos[1] += 1;
     player->rot[0] -= 1;
   }
   if (currentKeyStates[SDL_SCANCODE_DOWN]) {
-    // world->pos[1] -= 1;
     player->rot[0] += 1;
   }
   if (currentKeyStates[SDL_SCANCODE_LEFT]) {

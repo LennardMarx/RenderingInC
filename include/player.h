@@ -14,6 +14,8 @@ typedef struct Player {
 } Player;
 
 void player_init(Player *player);
+Player *new_player(float pos[3]);
+void destroy_player(Player *player);
 
 void player_update(Player *player);
 

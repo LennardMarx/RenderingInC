@@ -14,6 +14,7 @@ typedef struct {
 } Interface;
 
 void init_interface(Interface *interface, int width, int height);
+void destroy_interface(Interface *interface);
 
 SDL_Window *create_window_function(char *name, int width, int height);
 SDL_Renderer *create_renderer_function(SDL_Window *window);

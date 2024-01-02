@@ -8,16 +8,20 @@ void project_cube(Cube *cube, Player *player) {
                     cube->corners[i][1] - player->pos[1],
                     cube->corners[i][2] - player->pos[2]};
 
-    // Multiplier of where the plane intersects on the line. (ditance of player
+    // Multiplier of where the plane intersects on the line. (ditance of
+    // player
     // to plane to Distance of player to point)
     // float t = (player->plane->pos[2] - player->pos[2]) /
     //           (cube->corners[i][2] - player->pos[2]);
     float a = player->plane->normal[0];
     float b = player->plane->normal[1];
     float c = player->plane->normal[2];
-    float x0 = player->plane->centroid[0];
-    float y0 = player->plane->centroid[1];
-    float z0 = player->plane->centroid[2];
+    // float x0 = player->plane->centroid[0];
+    // float y0 = player->plane->centroid[1];
+    // float z0 = player->plane->centroid[2];
+    float x0 = player->plane->corners_ref[0][0];
+    float y0 = player->plane->corners_ref[0][1];
+    float z0 = player->plane->corners_ref[0][2];
     float x1 = player->pos[0];
     float y1 = player->pos[1];
     float z1 = player->pos[2];
@@ -40,6 +44,7 @@ void project_cube(Cube *cube, Player *player) {
     AB[2] = player->plane->corners_ref[1][2] - player->plane->corners_ref[0][2];
     float AB_len =
         sqrt((double)((AB[0] * AB[0]) + (AB[1] * AB[1]) + (AB[2] * AB[2])));
+    // printf("AB len: %float\n", AB_len);
     AB[0] /= AB_len;
     AB[1] /= AB_len;
     AB[2] /= AB_len;
@@ -49,14 +54,15 @@ void project_cube(Cube *cube, Player *player) {
     AD[1] = player->plane->corners_ref[3][1] - player->plane->corners_ref[0][1];
     AD[2] = player->plane->corners_ref[3][2] - player->plane->corners_ref[0][2];
     float AD_len = sqrt(((AD[0] * AD[0]) + (AD[1] * AD[1]) + (AD[2] * AD[2])));
+    // printf("AD len: %float\n", AD_len);
     AD[0] /= AD_len;
     AD[1] /= AD_len;
     AD[2] /= AD_len;
 
     float p__x = p_a[0] * AB[0] + p_a[1] * AB[1] + p_a[2] * AB[2];
     float p__y = p_a[0] * AD[0] + p_a[1] * AD[1] + p_a[2] * AD[2];
-    p__x -= 40;
-    p__y -= 30;
+    // p__x -= 40;
+    // p__y -= 30;
 
     // printf("Point on Plane: %f, %f \n", p__x, p__y);
 
@@ -67,10 +73,13 @@ void project_cube(Cube *cube, Player *player) {
     // cube->screen_pos[i][1] =
     //     (intersection[1] + (float)player->plane->height / 2) * HEIGHT /
     //     player->plane->height;
-    cube->screen_pos[i][0] =
-        (p__x + (float)player->plane->width / 2) * WIDTH / player->plane->width;
-    cube->screen_pos[i][1] = (p__y + (float)player->plane->height / 2) *
-                             HEIGHT / player->plane->height;
+    // cube->screen_pos[i][0] =
+    //     (p__x + (float)player->plane->width / 2) * WIDTH /
+    //     player->plane->width;
+    // cube->screen_pos[i][1] = (p__y + (float)player->plane->height / 2) *
+    //                          HEIGHT / player->plane->height;
+    cube->screen_pos[i][0] = p__x * WIDTH / player->plane->width;
+    cube->screen_pos[i][1] = p__y * HEIGHT / player->plane->height;
   }
 }
 
@@ -78,7 +87,7 @@ void project_cube(Cube *cube, Player *player) {
 //   // float test_dir[3] = {cube->pos[0] - focal->x, cube->pos[1] - focal->y,
 //   //                      cube->pos[2] - focal->z};
 //
-//   cube->t = player->plane->pos[2] / cube->pos[2];
+//   // cube->t = player->plane->pos[2] / cube->pos[2];
 //   // printf("Z Distance: %f\n", cube->pos[2]);
 //   for (int i = 0; i < 8; i++) {
 //

@@ -30,6 +30,7 @@ typedef struct Projection_Plane {
 void init_screen(Projection_Plane *plane);
 
 // void projection_plane_update_pos(Projection_Plane *plane, float rot[3]);
+void projection_plane_update_corners(Projection_Plane *plane);
 
 void projection_plane_rotate(Projection_Plane *plane, float point[3]);
 void projection_plane_rotate_x(Projection_Plane *plane, float point[3]);
