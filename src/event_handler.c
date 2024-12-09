@@ -2,7 +2,7 @@
 #include <SDL2/SDL_events.h>
 
 void handle_events_function(SDL_Event *event, int *quit, Player *player) {
-  SDL_SetRelativeMouseMode(SDL_TRUE);
+  // SDL_SetRelativeMouseMode(SDL_TRUE);
   while (SDL_PollEvent(event) != 0) {
     // User requests quit
     if (event->type == SDL_QUIT) {
